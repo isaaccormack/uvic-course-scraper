@@ -8,7 +8,7 @@ on:
     branches:
       - feature/auto-npm-publishing
 
-jobs:
+jobs:  
   publish-npm:
     runs-on: ubuntu-latest
     steps:
@@ -17,7 +17,9 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
+      - uses: 'phips28/gh-action-bump-version@master'
       - run: npm ci
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          GITHUB_TOKEN: ${{ secrets.github_token }}
